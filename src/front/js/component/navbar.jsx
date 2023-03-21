@@ -15,15 +15,23 @@ export const Navbar = () => {
 		<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
 			<span className="navbar-toggler-icon"></span>
 		</button>
-		<div class="btn-group">
-			<button type="button" className="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-				Favorites
-			</button>
+		<div className="btn-group">
+			<a type="button" className="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				Favorites {store.favorites.length}
+			</a>
 			<ul className="dropdown-menu list-unstyled" aria-labelledby="navbarDropdown">
 							{store.favorites && store.favorites.length > 0 ? <>
 								{store.favorites.map((item, index) => {
 									return <li key={index} to={item.link}>
-										{item.name} 
+										{item.name} <p
+                    className="ocultar "
+                    type="button"
+                    onClick={() => {
+						actions.deleteFavorite(item.uid);
+                    }}
+                  >
+                   <i className="fa-solid fa-trash"></i>
+                  </p>
 										
 									</li>
 									

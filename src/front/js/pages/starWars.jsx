@@ -13,6 +13,7 @@ const StarWars = () => {
     const [listVehicle, setListVehicle] = useState({})
     //se ejecuta la primera vez que se reenderiza el componente
     useEffect(() => {
+        <h1>CHARACTERS</h1>
         const cargaDatos = async () => {
             let { respuestaJson, response } = await actions.useFetch("/people")
             if (response.ok) {
@@ -37,43 +38,42 @@ const StarWars = () => {
     }, [])
 
     return (<>
-        Soy el componente de Star wars
 
-        <div>
-            <ul>
+        <div className="d-flex">
+            
                 {listPeople && listPeople.length > 0 ?
                     <>
                         {listPeople.map((item, index) => {
-                            return <li >
+                            return <div className= "d-flex" >
                                 <CardPeople name={item.name} uid={item.uid} />
-                            </li>
+                            </div>
                         })}
                     </> : <></>}
-            </ul>
+            
         </div>
-        <div>
-            <ul>
+        <div className="d-flex">
+           
                 {listPlanet && listPlanet.length > 0 ?
                     <>
                         {listPlanet.map((item, index) => {
-                            return <li>
+                            return <div className= "d-flex" >
                                 <Planets name={item.name} uid={item.uid} />
-                            </li>
+                            </div>
                         })}
                     </> : <></>}
-            </ul>
+            
         </div>
-        <div>
-            <ul>
+        <div className="d-flex">
+            
                 {listVehicle && listVehicle.length > 0 ?
                     <>
                         {listVehicle.map((item, index) => {
-                            return <li>
+                            return <div className= "d-flex" >
                                 <Vehicle name={item.name} uid={item.uid} />
-                            </li>
+                            </div>
                         })}
                     </> : <></>}
-            </ul>
+            
         </div>
     </>)
 }
