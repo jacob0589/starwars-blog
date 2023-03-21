@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useContext, useState} from "react";
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 export const Navbar = () => {
-	//<a href="./demo.html">
-	return (<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+	const { store, actions } = useContext(Context);
+
+	
+	return (
+	<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div className="container-fluid">
 	<Link to="/">
 	<img className="img-responsive h-25 w-25 starWarsNavIcon" src="https://lumiere-a.akamaihd.net/v1/images/sw_logo_stacked_2x-52b4f6d33087_7ef430af.png?region=0,0,586,254" />
@@ -12,16 +16,20 @@ export const Navbar = () => {
 			<span className="navbar-toggler-icon"></span>
 		</button>
 		<div class="btn-group">
-			<button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-				Action
+			<button type="button" className="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				Favorites
 			</button>
-			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#">Action</a></li>
-				<li><a class="dropdown-item" href="#">Another action</a></li>
-				<li><a class="dropdown-item" href="#">Something else here</a></li>
-				<li><hr class="dropdown-divider" /></li>
-				<li><a class="dropdown-item" href="#">Separated link</a></li>
-			</ul>
+			<ul className="dropdown-menu list-unstyled" aria-labelledby="navbarDropdown">
+							{store.favorites && store.favorites.length > 0 ? <>
+								{store.favorites.map((item, index) => {
+									return <li key={index} to={item.link}>
+										{item.name} 
+										
+									</li>
+									
+								})}
+							</> : <></>}
+							</ul>
 		</div>
 	</div>
 		</nav>
