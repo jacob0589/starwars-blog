@@ -7,75 +7,59 @@ import Vehicle from "../component/vehicle.jsx";
 import { todoActions } from "../store/todos";
 
 const StarWars = () => {
-    const { store, actions } = useContext(Context)
-    const [listPeople, setListPeople] = useState({})
-    const [listPlanet, setListPlanet] = useState({})
-    const [listVehicle, setListVehicle] = useState({})
-    //se ejecuta la primera vez que se reenderiza el componente
+    const { store, actions } = useContext(Context);
+    const [listPeople, setListPeople] = useState([]);
+    const [listPlanet, setListPlanet] = useState([]);
+    const [listVehicle, setListVehicle] = useState([]);
+
     useEffect(() => {
-        <h1>CHARACTERS</h1>
         const cargaDatos = async () => {
-            let { respuestaJson, response } = await actions.useFetch("/people")
+            let { respuestaJson, response } = await actions.useFetch("/people");
             if (response.ok) {
-
-                setListPeople(respuestaJson.results)
+                setListPeople(respuestaJson.results);
             }
 
-            ({ respuestaJson, response } = await actions.useFetch("/planets"))
+            ({ respuestaJson, response } = await actions.useFetch("/planets"));
             if (response.ok) {
-
-                setListPlanet(respuestaJson.results)
+                setListPlanet(respuestaJson.results);
             }
 
-            ({ respuestaJson, response } = await actions.useFetch("/vehicles"))
+            ({ respuestaJson, response } = await actions.useFetch("/vehicles"));
             if (response.ok) {
-
-                setListVehicle(respuestaJson.results)
+                setListVehicle(respuestaJson.results);
             }
-        }
-        cargaDatos()
+        };
+        cargaDatos();
+    }, []);
 
-    }, [])
+    return (
+        <>
+            <h1>CHARACTERS</h1>
+            <div className="container mt-3">
+                <div className="card-container d-flex flex-nowrap">
+                    {listPeople.map((item, index) => (
+                        <CardPeople key={item.uid} name={item.name} uid={item.uid} />
+                    ))}
+                </div>
+            </div>
+            <h1>PLANETS</h1>
+            <div className="container mt-3">
+                <div className="card-container d-flex flex-nowrap">
+                    {listPlanet.map((item, index) => (
+                        <Planets key={item.uid} name={item.name} uid={item.uid} />
+                    ))}
+                </div>
+            </div>
+            <h1>VEHICLES</h1>
+            <div className="container mt-3">
+                <div className="card-container d-flex flex-nowrap">
+                    {listVehicle.map((item, index) => (
+                        <Vehicle key={item.uid} name={item.name} uid={item.uid} />
+                    ))}
+                </div>
+            </div>
+        </>
+    );
+};
 
-    return (<>
-
-        <div className="d-flex">
-            
-                {listPeople && listPeople.length > 0 ?
-                    <>
-                        {listPeople.map((item, index) => {
-                            return <div className= "d-flex" >
-                                <CardPeople name={item.name} uid={item.uid} />
-                            </div>
-                        })}
-                    </> : <></>}
-            
-        </div>
-        <div className="d-flex">
-           
-                {listPlanet && listPlanet.length > 0 ?
-                    <>
-                        {listPlanet.map((item, index) => {
-                            return <div className= "d-flex" >
-                                <Planets name={item.name} uid={item.uid} />
-                            </div>
-                        })}
-                    </> : <></>}
-            
-        </div>
-        <div className="d-flex">
-            
-                {listVehicle && listVehicle.length > 0 ?
-                    <>
-                        {listVehicle.map((item, index) => {
-                            return <div className= "d-flex" >
-                                <Vehicle name={item.name} uid={item.uid} />
-                            </div>
-                        })}
-                    </> : <></>}
-            
-        </div>
-    </>)
-}
-
-export default StarWars
+export default StarWars;
